@@ -47,6 +47,10 @@ const Home = () => {
       setIsModalVisible(true)
     }
 
+    const handleClickReset = e => {
+
+    }
+
     const handleOk = () => {
       setIsModalVisible(false);
     };
@@ -71,6 +75,7 @@ const Home = () => {
       <Sidebar/>
       <Layout>
         <Header style={{textAlign:'left'}}>
+            <h1 style={{display:'inline-block',color:'#FFF',marginRight:40}}>Pokedex</h1>
             {poke1 &&
             <span style={{color:'#FFF'}}>{poke1.name}</span>
             }
@@ -79,6 +84,9 @@ const Home = () => {
             }
             {poke1 && poke2 &&
             <Button onClick={handleClickCompare} style={{marginLeft:20}} type="primary">Compare</Button>
+            }
+            {poke1 && poke2 &&
+            <Button onClick={handleClickReset} style={{marginLeft:20}} type="primary">Reset</Button>
             }
         </Header>
         <Content style={{padding:20}}>
@@ -96,7 +104,7 @@ const Home = () => {
         </Content>
         <Footer></Footer>
         <Modal
-          title="Basic Modal"
+          title="Pokemon Versus"
           visible={isModalVisible}
           onOk={handleOk}
           onCancel={handleCancel}
@@ -121,6 +129,8 @@ const Home = () => {
                     <p>Special Attack</p>
                     <p>Special Defense</p>
                     <p>Speed</p>
+                    <p>Height:</p>
+                    <p>Weight:</p>
                 </Col>
                 <Col span={10}>
                     <Progress percent={poke1Detail.stats[0].base_stat} showInfo={false}  style={{marginBottom:13}}/>
@@ -129,10 +139,10 @@ const Home = () => {
                     <Progress percent={poke1Detail.stats[3].base_stat} showInfo={false} style={{marginBottom:13}}/>
                     <Progress percent={poke1Detail.stats[4].base_stat} showInfo={false} style={{marginBottom:13}}/>
                     <Progress percent={poke1Detail.stats[5].base_stat} showInfo={false} style={{marginBottom:13}}/>
+                    <p> {poke1Detail.height}</p>
+                    <p> {poke1Detail.weight}</p>
                 </Col>
             </Row>
-            <p>Height: {poke1Detail.height}</p>
-            <p>Weight: {poke1Detail.weight}</p>
             <div style={{marginTop:20}} class="ant-statistic-title">Type</div>
             {poke1Detail.types.map((item) =>{
                 if (item.type.name == 'fire') {
@@ -171,6 +181,8 @@ const Home = () => {
                     <p>Special Attack</p>
                     <p>Special Defense</p>
                     <p>Speed</p>
+                    <p>Height:</p>
+                    <p>Weight:</p>
                 </Col>
                 <Col span={10}>
                     <Progress percent={poke2Detail.stats[0].base_stat} showInfo={false}  style={{marginBottom:13}}/>
@@ -179,8 +191,29 @@ const Home = () => {
                     <Progress percent={poke2Detail.stats[3].base_stat} showInfo={false} style={{marginBottom:13}}/>
                     <Progress percent={poke2Detail.stats[4].base_stat} showInfo={false} style={{marginBottom:13}}/>
                     <Progress percent={poke2Detail.stats[5].base_stat} showInfo={false} style={{marginBottom:13}}/>
+                    <p> {poke2Detail.height}</p>
+                    <p> {poke2Detail.weight}</p>
                 </Col>
             </Row>
+            <div style={{marginTop:20}} class="ant-statistic-title">Type</div>
+            {poke2Detail.types.map((item) =>{
+                if (item.type.name == 'fire') {
+                    return <Tag color="volcano">{item.type.name}</Tag>
+                }
+                if (item.type.name == 'grass') {
+                    return <Tag color="green">{item.type.name}</Tag>
+                }
+                if (item.type.name == 'poison') {
+                    return <Tag color="purple">{item.type.name}</Tag>
+                }
+                if (item.type.name == 'water') {
+                    return <Tag color="blue">{item.type.name}</Tag>
+                }
+                
+                return (
+                    <Tag color="orange">{item.type.name}</Tag>
+                )
+            })}
             </div>
             }
             </Col>

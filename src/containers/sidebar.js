@@ -39,6 +39,7 @@ const Home = () => {
       <Menu
         style={{ width: 200 }}
         mode="inline"
+        theme="dark"
       >
         
         <SubMenu key="sub4" icon={<SettingOutlined />} title="Types">
