@@ -73,7 +73,7 @@ const PokeDetail = (props) => {
                 <Col span={12}>
                     <div class="ant-statistic-title">Ability</div>
                     {pokeDetail.abilities.map((item) =>(
-                    <Tag color="#108ee9">{item.ability.name}</Tag>
+                    <Tag color="#108ee9" style={{marginBottom:10}}>{item.ability.name}</Tag>
                     ))}
                     <div style={{marginTop:20}} class="ant-statistic-title">Forms</div>
                     {pokeDetail.forms.map((item) =>(
