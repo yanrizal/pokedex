@@ -1,25 +1,27 @@
 import { useState, useEffect } from 'react';
-import { Row, Col, Layout, Menu, message, Card, Pagination, Popover } from 'antd';
+import { Row, Col, message, Card, Pagination, Popover } from 'antd';
 import { getPokeList, clearPokeList, addComparePoke1, addComparePoke2 } from '../actions';
 import { useDispatch, useSelector } from "react-redux";
-import {
-    useHistory,
-  } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { getImgIndex, capitalize } from '../utils';
 
 const { Meta } = Card;
 
-const Home = () => {
+const PokeList = () => {
     const pokeList = useSelector(({pokeReducer}) => pokeReducer.pokeList);
     const count = useSelector(({pokeReducer}) => pokeReducer.count);
     const comparePoke1 = useSelector(({pokeReducer}) => pokeReducer.comparePoke1);
     const comparePoke2 = useSelector(({pokeReducer}) => pokeReducer.comparePoke2);
+    const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
     const history = useHistory();
     const itemsPerPage = 20
 
     useEffect(() => {
         dispatch(clearPokeList())
-        dispatch(getPokeList())
+        dispatch(getPokeList()).then(() => {
+            setLoading(false)
+        })
     }, [])
     
     const handleClickDetail = e => {
@@ -27,22 +29,13 @@ const Home = () => {
     };
 
     const handlePageChange = e => {
-      console.log(e)
+      setLoading(true)
       dispatch(getPokeList({
         limit: itemsPerPage,
         offset: (e - 1) * itemsPerPage
-      }))
-    }
-
-
-    const getImgIndex = (idx) => {
-        if (idx < 10) {
-            return '00' + idx
-        }
-        if (idx < 100) {
-            return '0' + idx
-        }
-        return idx
+      })).then(() => {
+          setLoading(false)
+      })
     }
 
     const handleClickCompare = e => {
@@ -65,7 +58,7 @@ const Home = () => {
 
 
     return (
-        <div>
+        <div style={{minHeight:1000}}>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                 
                 {pokeList.map((item) => {
@@ -73,16 +66,16 @@ const Home = () => {
                 imgIndex = imgIndex[1].replace('/','')
                 return (
                     <Col key={item.name} className="gutter-row" span={6} style={{marginBottom:20}}>
-                    <Popover content={() => content(item)} title={item.name} trigger="click">
+                    <Popover content={() => content(item)} title={capitalize(item.name)} trigger="click">
                     <Card
-                        
+                        loading={loading}
                         hoverable
                         style={{ width: 240 }}
-                        cover={(imgIndex> 10000)?null:
-                        <img alt="example" src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${getImgIndex(imgIndex)}.png`} />
+                        cover={(imgIndex > 10000)?null:
+                        (!loading)?<img alt="example" src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${getImgIndex(imgIndex)}.png`} />:null
                         }
                     >
-                        <Meta title={item.name} />
+                        <Meta title={capitalize(item.name)} />
                     </Card>
                     </Popover>
                     
@@ -94,4 +87,4 @@ const Home = () => {
     </div>      
 )};
   
-export default Home;
+export default PokeList;

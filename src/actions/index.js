@@ -14,12 +14,10 @@ export const getPokeList = credential => (dispatch, getState) => {
 	return new Promise((resolve, reject) => {
 	axios(fetchLoad)
 	  .then(function (response) {
-		console.log(response)
 		resolve(response)
 		dispatch({type: 'GET_POKELIST_SUCCESS', data: response.data});
 	  })
 	  .catch(function (error) {
-      console.log(error)
       	reject(error.response)
 	  });
 	})
@@ -27,6 +25,10 @@ export const getPokeList = credential => (dispatch, getState) => {
 
 export const clearPokeList = credential => (dispatch, getState) => {
 	dispatch({type: 'CLEAR_POKELIST_SUCCESS'});
+}
+
+export const resetPokeCompare = credential => (dispatch, getState) => {
+	dispatch({type: 'RESET_POKECOMPARE_SUCCESS'});
 }
 
 export const addComparePoke1 = credential => (dispatch, getState) => {
@@ -49,7 +51,6 @@ export const getPokeDetail = (credential,type) => (dispatch, getState) => {
 	return new Promise((resolve, reject) => {
 	axios(fetchLoad)
 	  .then(function (response) {
-		console.log(response)
 		resolve(response)
 		if (type == 'poke1') {
 			dispatch({type: 'GET_POKEDETAIL1_SUCCESS', data: response.data});
@@ -61,7 +62,6 @@ export const getPokeDetail = (credential,type) => (dispatch, getState) => {
 		
 	  })
 	  .catch(function (error) {
-      console.log(error)
       	reject(error.response)
 	  });
 	})
@@ -79,12 +79,10 @@ export const getPokeTypes = credential => (dispatch, getState) => {
 	return new Promise((resolve, reject) => {
 	axios(fetchLoad)
 	  .then(function (response) {
-		console.log(response)
 		resolve(response)
 		dispatch({type: 'GET_POKETYPE_SUCCESS', data: response.data});
 	  })
 	  .catch(function (error) {
-      console.log(error)
       	reject(error.response)
 	  });
 	})
@@ -102,12 +100,10 @@ export const getPokeListByTypes = credential => (dispatch, getState) => {
 	return new Promise((resolve, reject) => {
 	axios(fetchLoad)
 	  .then(function (response) {
-		console.log(response)
 		resolve(response)
 		dispatch({type: 'GET_POKELISTBYTYPE_SUCCESS', data: response.data});
 	  })
 	  .catch(function (error) {
-      console.log(error)
       	reject(error.response)
 	  });
 	})

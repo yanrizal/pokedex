@@ -1,36 +1,39 @@
 import { useState, useEffect } from 'react';
-import { Row, Col, Layout, Menu, Input, Card, Pagination } from 'antd';
+import { Layout, Menu } from 'antd';
 import { getPokeTypes, clearPokeList, getPokeListByTypes } from '../actions';
 import { useDispatch, useSelector } from "react-redux";
-import { AppstoreOutlined, MailOutlined, SettingOutlined, AudioOutlined  } from '@ant-design/icons';
-import {
-    useHistory
-  } from "react-router-dom";
+import { SettingOutlined } from '@ant-design/icons';
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
-const Home = () => {
+const Sidebar = () => {
     const pokeType = useSelector(({pokeReducer}) => pokeReducer.pokeType);
     const dispatch = useDispatch();
     const history = useHistory();
+    const { path, url } = useRouteMatch();
+    const [current, setCurrent] = useState('');
 
     useEffect(() => {
         dispatch(getPokeTypes())
     }, [])
 
-    const handleClickMenu = e => {
-        console.log('click ', e);
+    useEffect(() => {
+      if (window.location.pathname == '/') {
+        setCurrent('')
+      }
+  }, [window.location.href])
+
+    const handleClickMenu = (e,idx) => {
+        console.log('click ', e, idx);
         dispatch(clearPokeList())
         let url = e.url.split('https://pokeapi.co/api/v2/type/');
         let index = url[1].replace('/','')
         dispatch(getPokeListByTypes(index))
         history.push("/type/"+index);
-        
+        setCurrent([String(idx)])
     };
-    
-
-
 
     return (
       <Sider>
@@ -40,18 +43,17 @@ const Home = () => {
         style={{ width: 200 }}
         mode="inline"
         theme="dark"
+        selectedKeys={current}
       >
-        
         <SubMenu key="sub4" icon={<SettingOutlined />} title="Types">
         {pokeType.map((item,index) => {
             return (
-                <Menu.Item onClick={() => handleClickMenu(item)} key={index}>{item.name}</Menu.Item>
+                <Menu.Item onClick={() => handleClickMenu(item, index)} key={index}>{item.name}</Menu.Item>
             )
         })}
-          
         </SubMenu>
       </Menu>
       </Sider>
 )};
   
-export default Home;
+export default Sidebar;

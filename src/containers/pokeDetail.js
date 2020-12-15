@@ -1,40 +1,31 @@
 import { useState, useEffect } from 'react';
-import { Row, Col, Layout, Menu, Input, Card, Statistic, Progress, Tag } from 'antd';
-import { getPokeList, getPokeDetail } from '../actions';
+import { Row, Col, Statistic, Progress, Tag, Skeleton  } from 'antd';
+import { getPokeDetail } from '../actions';
 import { useDispatch, useSelector } from "react-redux";
-import { AppstoreOutlined, MailOutlined, SettingOutlined, AudioOutlined  } from '@ant-design/icons';
-import {
-    BrowserRouter as Router,
-    useParams,
-  } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { getImgIndex, capitalize } from '../utils';
 
-const Home = (props) => {
+const PokeDetail = (props) => {
     const pokeDetail = useSelector(({pokeReducer}) => pokeReducer.pokeDetail);
     const dispatch = useDispatch();
     const params = useParams();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        console.log(params)
+        window.scrollTo(0, 0)
         dispatch(getPokeDetail(params.id)).then((rr) => {
-            console.log('ss', pokeDetail)
+            setLoading(false)
         })
     }, [])
 
-    const getImgIndex = (idx) => {
-        if (idx < 10) {
-            return '00' + idx
-        }
-        if (idx < 100) {
-            return '0' + idx
-        }
-        return idx
-    }
-
-
 
     return (
-    <div>
-        <h2 style={{marginBottom:20}}>{pokeDetail.name}</h2>
+    <div style={{minHeight:1000}}>
+        
+        {!loading &&
+        <h2 style={{marginBottom:20}}>{capitalize(pokeDetail.name)}</h2>
+        }
+        {!loading &&
         <Row>
             <Col span={12}>
                 {pokeDetail.id < 10000 &&
@@ -42,20 +33,14 @@ const Home = (props) => {
                 }
                 <Row gutter={16}>
                 <Col span={12}>
-                    <p>HP</p>
-                    <p>Attack</p>
-                    <p>Defense</p>
-                    <p>Special Attack</p>
-                    <p>Special Defense</p>
-                    <p>Speed</p>
+                    {pokeDetail.stats.map((item) => (
+                        <p>{capitalize(item.stat.name.replace('-',' '))}</p>
+                    ))}
                 </Col>
                 <Col span={12}>
-                    <Progress percent={pokeDetail.stats[0].base_stat} showInfo={false}  style={{marginBottom:13}}/>
-                    <Progress percent={pokeDetail.stats[1].base_stat} showInfo={false} style={{marginBottom:13}}/>
-                    <Progress percent={pokeDetail.stats[2].base_stat} showInfo={false} style={{marginBottom:13}}/>
-                    <Progress percent={pokeDetail.stats[3].base_stat} showInfo={false} style={{marginBottom:13}}/>
-                    <Progress percent={pokeDetail.stats[4].base_stat} showInfo={false} style={{marginBottom:13}}/>
-                    <Progress percent={pokeDetail.stats[5].base_stat} showInfo={false} style={{marginBottom:13}}/>
+                    {pokeDetail.stats.map((item) => (
+                        <Progress percent={item.base_stat} showInfo={false}  style={{marginBottom:13}}/>
+                    ))}
                 </Col>
                 </Row>
             </Col>
@@ -90,7 +75,8 @@ const Home = (props) => {
             </Row>
             </Col>
         </Row>
+        }
     </div>
 )};
   
-export default Home;
+export default PokeDetail;

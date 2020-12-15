@@ -9,7 +9,7 @@ const initState = {
     poke2Detail: null,
     pokeDetail:{
       types:[],
-      stats:[{base_stat:0},{base_stat:0},{base_stat:0},{base_stat:0},{base_stat:0},{base_stat:0}]
+      stats:[{base_stat:0,stat:{name:''}}]
     }
   };
   
@@ -26,6 +26,14 @@ const pokeReducer = (state = initState, action) => {
             ...state,
             pokeList: [],
           };
+          case 'RESET_POKECOMPARE_SUCCESS':
+            return {
+              ...state,
+              comparePoke1: null,
+              comparePoke2: null,
+              poke1Detail: null,
+              poke2Detail: null,
+            };
         case 'ADD_POKECOMPARE_SUCCESS':
             return {
               ...state,
