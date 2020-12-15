@@ -52,9 +52,9 @@ export const getPokeDetail = (credential,type) => (dispatch, getState) => {
 	axios(fetchLoad)
 	  .then(function (response) {
 		resolve(response)
-		if (type == 'poke1') {
+		if (type === 'poke1') {
 			dispatch({type: 'GET_POKEDETAIL1_SUCCESS', data: response.data});
-		} else if (type == 'poke2') {
+		} else if (type === 'poke2') {
 			dispatch({type: 'GET_POKEDETAIL2_SUCCESS', data: response.data});
 		} else {
 			dispatch({type: 'GET_POKEDETAIL_SUCCESS', data: response.data});

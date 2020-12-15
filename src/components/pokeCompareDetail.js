@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Row, Col, Progress, Tag } from 'antd';
 import { getImgIndex, capitalize } from '../utils';
 
@@ -44,7 +43,7 @@ const PokeCompareDetail = (props) => {
       poke2Point = (spDefDiff < 0) ? (poke2Point + 3*(Math.abs(spDefDiff))) : poke2Point;
       poke1Point = (spdDiff > 0) ? (poke1Point + 1.5*(Math.abs(spdDiff))) : poke1Point;
       poke2Point = (spdDiff < 0) ? (poke2Point + 1.5*(Math.abs(spdDiff))) : poke2Point;
-      if (id == 1) {
+      if (id === 1) {
         return Math.round(poke1Point/(poke1Point + poke2Point) * 100);
       }
       return Math.round(poke2Point/(poke1Point + poke2Point) * 100);
@@ -81,16 +80,16 @@ const PokeCompareDetail = (props) => {
             </Row>
             <div style={{marginTop:20}} class="ant-statistic-title">Type</div>
             {poke1Detail.types.map((item) =>{
-                if (item.type.name == 'fire') {
+                if (item.type.name === 'fire') {
                     return <Tag color="volcano">{item.type.name}</Tag>
                 }
-                if (item.type.name == 'grass') {
+                if (item.type.name === 'grass') {
                     return <Tag color="green">{item.type.name}</Tag>
                 }
-                if (item.type.name == 'poison') {
+                if (item.type.name === 'poison') {
                     return <Tag color="purple">{item.type.name}</Tag>
                 }
-                if (item.type.name == 'water') {
+                if (item.type.name === 'water') {
                     return <Tag color="blue">{item.type.name}</Tag>
                 }
                 
@@ -130,16 +129,16 @@ const PokeCompareDetail = (props) => {
             </Row>
             <div style={{marginTop:20}} class="ant-statistic-title">Type</div>
             {poke2Detail.types.map((item) =>{
-                if (item.type.name == 'fire') {
+                if (item.type.name === 'fire') {
                     return <Tag color="volcano">{item.type.name}</Tag>
                 }
-                if (item.type.name == 'grass') {
+                if (item.type.name === 'grass') {
                     return <Tag color="green">{item.type.name}</Tag>
                 }
-                if (item.type.name == 'poison') {
+                if (item.type.name === 'poison') {
                     return <Tag color="purple">{item.type.name}</Tag>
                 }
-                if (item.type.name == 'water') {
+                if (item.type.name === 'water') {
                     return <Tag color="blue">{item.type.name}</Tag>
                 }
                 

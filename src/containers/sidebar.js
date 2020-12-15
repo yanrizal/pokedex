@@ -26,7 +26,6 @@ const Sidebar = () => {
   }, [window.location.href])
 
     const handleClickMenu = (e,idx) => {
-        console.log('click ', e, idx);
         dispatch(clearPokeList())
         let url = e.url.split('https://pokeapi.co/api/v2/type/');
         let index = url[1].replace('/','')

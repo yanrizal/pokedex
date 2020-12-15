@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Row, Col, Statistic, Progress, Tag, Skeleton  } from 'antd';
+import { Row, Col, Statistic, Progress, Tag  } from 'antd';
 import { getPokeDetail } from '../actions';
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -51,16 +51,16 @@ const PokeDetail = (props) => {
                     <Statistic style={{marginTop:20}} title="Weight" value={pokeDetail.weight} />
                     <div style={{marginTop:20}} class="ant-statistic-title">Type</div>
                     {pokeDetail.types.map((item) =>{
-                        if (item.type.name == 'fire') {
+                        if (item.type.name === 'fire') {
                             return <Tag color="volcano">{item.type.name}</Tag>
                         }
-                        if (item.type.name == 'grass') {
+                        if (item.type.name === 'grass') {
                             return <Tag color="green">{item.type.name}</Tag>
                         }
-                        if (item.type.name == 'poison') {
+                        if (item.type.name === 'poison') {
                             return <Tag color="purple">{item.type.name}</Tag>
                         }
-                        if (item.type.name == 'water') {
+                        if (item.type.name === 'water') {
                             return <Tag color="blue">{item.type.name}</Tag>
                         }
                         
@@ -68,9 +68,17 @@ const PokeDetail = (props) => {
                             <Tag color="orange">{item.type.name}</Tag>
                         )
                     })}
+                    
                 </Col>
                 <Col span={12}>
-                    
+                    <div class="ant-statistic-title">Ability</div>
+                    {pokeDetail.abilities.map((item) =>(
+                    <Tag color="#108ee9">{item.ability.name}</Tag>
+                    ))}
+                    <div style={{marginTop:20}} class="ant-statistic-title">Forms</div>
+                    {pokeDetail.forms.map((item) =>(
+                    <Tag color="#87d068">{item.name}</Tag>
+                    ))}
                 </Col>
             </Row>
             </Col>
